@@ -196,11 +196,11 @@ public class ItemTouchHelperCallback<T> extends ItemTouchHelper.Callback {
                     int index = childCount - position - 1;
                     View view = recyclerView.getChildAt(position);
 
-                    float scale = 1 - index * ItemConfig.DEFAULT_SCALE + Math.abs(ratioX) * ItemConfig.DEFAULT_SCALE;
+                    float scale = 1 - index * ItemConfig.DEFAULT_SCALE + Math.abs(ratio) * ItemConfig.DEFAULT_SCALE;
                     view.setScaleX(scale);
                     view.setScaleY(scale);
 
-                    view.setTranslationY((index - Math.abs(ratioX)) * itemView.getMeasuredHeight() / ItemConfig.DEFAULT_TRANSLATE_Y);
+                    view.setTranslationY((index - Math.abs(ratio)) * itemView.getMeasuredHeight() / ItemConfig.DEFAULT_TRANSLATE_Y);
                 }
             }
             if (mListener != null) {
