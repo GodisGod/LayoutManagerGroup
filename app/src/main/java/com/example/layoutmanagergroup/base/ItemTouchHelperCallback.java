@@ -161,7 +161,7 @@ public class ItemTouchHelperCallback<T> extends ItemTouchHelper.Callback {
             if (childCount > ItemConfig.DEFAULT_SHOW_ITEM) {
                 for (int position = 1; position < childCount - 1; position++) {
                     int index = childCount - position - 1;
-                    float scale = 1 - index * ItemConfig.DEFAULT_SCALE + Math.abs(ratioX) * ItemConfig.DEFAULT_SCALE;
+                    float scale = 1 - index * ItemConfig.DEFAULT_SCALE + Math.abs(ratio) * ItemConfig.DEFAULT_SCALE;
 
                     Log.i("YYY","onChildDraw");
                     View view = recyclerView.getChildAt(position);

@@ -32,6 +32,7 @@ public class CardLayoutManager extends RecyclerView.LayoutManager {
         detachAndScrapAttachedViews(recycler);
         int itemCount = getItemCount();
         if (itemCount > ItemConfig.DEFAULT_SHOW_ITEM) {
+
             for (int position = ItemConfig.DEFAULT_SHOW_ITEM; position >= 0; position--) {
                 //寻找view并添加
                 final View view = recycler.getViewForPosition(position);
@@ -44,17 +45,19 @@ public class CardLayoutManager extends RecyclerView.LayoutManager {
                         widthSpace / 2 + getDecoratedMeasuredWidth(view),
                         heightSpace / 5 + getDecoratedMeasuredHeight(view));
 
-                Log.i("YYY","onLayoutChildren");
+                Log.i("YYY", "onLayoutChildren");
 
                 if (position == ItemConfig.DEFAULT_SHOW_ITEM) {
-                    view.setScaleX(1 - (position - 1) * ItemConfig.DEFAULT_SCALE);
-                    view.setScaleY(1 - (position - 1) * ItemConfig.DEFAULT_SCALE);
+                    float scale = 1 - (position - 1) * ItemConfig.DEFAULT_SCALE;
+                    view.setScaleX(scale);
+                    view.setScaleY(scale);
                     float y = (position - 1) * view.getMeasuredHeight() / ItemConfig.DEFAULT_TRANSLATE_Y;
                     Log.i("LHD", "布局 position = " + position + " y = " + y);
                     view.setTranslationY(y);
                 } else if (position > 0) {
-                    view.setScaleX(1 - position * ItemConfig.DEFAULT_SCALE);
-                    view.setScaleY(1 - position * ItemConfig.DEFAULT_SCALE);
+                    float scale = 1 - position * ItemConfig.DEFAULT_SCALE;
+                    view.setScaleX(scale);
+                    view.setScaleY(scale);
                     float y = position * view.getMeasuredHeight() / ItemConfig.DEFAULT_TRANSLATE_Y;
                     Log.i("LHD", "布局 position = " + position + " y = " + y);
                     view.setTranslationY(y);
