@@ -163,13 +163,13 @@ public class ItemTouchHelperCallback<T> extends ItemTouchHelper.Callback {
                     int index = childCount - position - 1;
                     float scale = 1 - index * ItemConfig.DEFAULT_SCALE + Math.abs(ratio) * ItemConfig.DEFAULT_SCALE;
 
-                    Log.i("YYY","onChildDraw");
+                    Log.i("YYY", "onChildDraw");
                     View view = recyclerView.getChildAt(position);
                     view.setScaleX(scale);
                     view.setScaleY(scale);
 
                     float y = (index - Math.abs(ratio)) * itemView.getMeasuredHeight() / ItemConfig.DEFAULT_TRANSLATE_Y;
-                    Log.i("DDD", "position = " + position + " y = " + y);
+                    Log.i("DDD", "position111 = " + position + " y = " + y);
                     view.setTranslationY(y);
 
 //                    //排列方向
@@ -195,12 +195,13 @@ public class ItemTouchHelperCallback<T> extends ItemTouchHelper.Callback {
                 for (int position = 0; position < childCount - 1; position++) {
                     int index = childCount - position - 1;
                     View view = recyclerView.getChildAt(position);
-
                     float scale = 1 - index * ItemConfig.DEFAULT_SCALE + Math.abs(ratio) * ItemConfig.DEFAULT_SCALE;
                     view.setScaleX(scale);
                     view.setScaleY(scale);
 
-                    view.setTranslationY((index - Math.abs(ratio)) * itemView.getMeasuredHeight() / ItemConfig.DEFAULT_TRANSLATE_Y);
+                    float y = (index - Math.abs(ratio)) * itemView.getMeasuredHeight() / ItemConfig.DEFAULT_TRANSLATE_Y;
+                    Log.i("DDD", "position222 = " + position + " y = " + y);
+                    view.setTranslationY(y);
                 }
             }
             if (mListener != null) {
