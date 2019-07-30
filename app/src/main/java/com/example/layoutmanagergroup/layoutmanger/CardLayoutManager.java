@@ -29,13 +29,17 @@ public class CardLayoutManager extends RecyclerView.LayoutManager {
 
     @Override
     public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
-        detachAndScrapAttachedViews(recycler);
+        //detachAndScrapAttachedViews适用于频繁更新的情况，比如列表可以上下滑动，过去的数据仍然有可能再次展示出来
+//        detachAndScrapAttachedViews(recycler);
+        //removeAndRecycleAllViews适用于只展示一次的情况，就像我们的卡片，滑动过去后就不在展示了
+        removeAndRecycleAllViews(recycler);
         int itemCount = getItemCount();
         if (itemCount > ItemConfig.DEFAULT_SHOW_ITEM) {
 
             for (int position = ItemConfig.DEFAULT_SHOW_ITEM; position >= 0; position--) {
                 //寻找view并添加
                 final View view = recycler.getViewForPosition(position);
+                //注意这行,之所以是倒序是因为先add的view会被盖住，所以要倒着添加，这样显示顺序才是正确的
                 addView(view);
                 //测量view宽高
                 measureChildWithMargins(view, 0, 0);
@@ -52,14 +56,14 @@ public class CardLayoutManager extends RecyclerView.LayoutManager {
                     view.setScaleX(scale);
                     view.setScaleY(scale);
                     float y = (position - 1) * view.getMeasuredHeight() / ItemConfig.DEFAULT_TRANSLATE_Y;
-                    Log.i("LHD", "布局 position = " + position + " y = " + y);
+                    Log.i("LHD", "布局 position = " + position + " y = " + y + " scale = " + scale);
                     view.setTranslationY(y);
                 } else if (position > 0) {
                     float scale = 1 - position * ItemConfig.DEFAULT_SCALE;
                     view.setScaleX(scale);
                     view.setScaleY(scale);
                     float y = position * view.getMeasuredHeight() / ItemConfig.DEFAULT_TRANSLATE_Y;
-                    Log.i("LHD", "布局 position = " + position + " y = " + y);
+                    Log.i("LHD", "布局 position = " + position + " y = " + y + " scale = " + scale);
                     view.setTranslationY(y);
                 } else {
                     view.setOnTouchListener(mOnTouchListener);

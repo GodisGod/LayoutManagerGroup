@@ -164,12 +164,21 @@ public class ItemTouchHelperCallback<T> extends ItemTouchHelper.Callback {
                     float scale = 1 - index * ItemConfig.DEFAULT_SCALE + Math.abs(ratio) * ItemConfig.DEFAULT_SCALE;
 
                     Log.i("YYY", "onChildDraw");
+                    //注意这里,由于在CardLayoutManager中addView的时候是倒序添加的
+                    //假设真实的数据源是A,B,C,D,E，那么在CardLayoutManager中的添加顺序是E,D,C,B,A
+                    //所以我们在这里使用recyclerView.getChildAt(position);获取的顺序其实是倒序的
+                    //即position = 0 view = E
+                    //即position = 1 view = D
+                    //即position = 2 view = C
+                    //即position = 3 view = B
+                    //即position = 4 view = A
+                    //要好好理解这一点
                     View view = recyclerView.getChildAt(position);
                     view.setScaleX(scale);
                     view.setScaleY(scale);
 
                     float y = (index - Math.abs(ratio)) * itemView.getMeasuredHeight() / ItemConfig.DEFAULT_TRANSLATE_Y;
-                    Log.i("DDD", "position111 = " + position + " y = " + y);
+                    Log.i("DDD", "position111 = " + position + " y = " + y + "  scale = " + scale);
                     view.setTranslationY(y);
 
 //                    //排列方向
@@ -200,7 +209,7 @@ public class ItemTouchHelperCallback<T> extends ItemTouchHelper.Callback {
                     view.setScaleY(scale);
 
                     float y = (index - Math.abs(ratio)) * itemView.getMeasuredHeight() / ItemConfig.DEFAULT_TRANSLATE_Y;
-                    Log.i("DDD", "position222 = " + position + " y = " + y);
+                    Log.i("DDD", "position222 = " + position + " y = " + y + "  scale = " + scale);
                     view.setTranslationY(y);
                 }
             }
