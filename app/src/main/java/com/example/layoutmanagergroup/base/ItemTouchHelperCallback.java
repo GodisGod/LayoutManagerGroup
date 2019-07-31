@@ -74,18 +74,18 @@ public class ItemTouchHelperCallback<T> extends ItemTouchHelper.Callback {
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
 
         viewHolder.itemView.setOnTouchListener(null);
-        int layoutPosition = viewHolder.getLayoutPosition();
-        T remove = dataList.remove(layoutPosition);
-        adapter.notifyDataSetChanged();
 
         Log.i("LHD", "direction = " + direction + "  ItemTouchHelper.UP = " + ItemTouchHelper.UP + "  ItemTouchHelper.DOWN = " + ItemTouchHelper.DOWN);
         if (direction == ItemTouchHelper.UP || direction == ItemTouchHelper.DOWN) {
 
-            mListener.onSlided(viewHolder, remove, direction == ItemTouchHelper.UP ? ItemConfig.SLIDED_LEFT : ItemConfig.SLIDED_RIGHT);
-
+//            mListener.onSlided(viewHolder, remove, direction == ItemTouchHelper.UP ? ItemConfig.SLIDED_LEFT : ItemConfig.SLIDED_RIGHT);
+            adapter.notifyDataSetChanged();
             return;
         }
 
+        int layoutPosition = viewHolder.getLayoutPosition();
+        T remove = dataList.remove(layoutPosition);
+        adapter.notifyDataSetChanged();
         if (mListener != null) {
             Log.i("LHD", "ItemTouchHelper.LEFT = " + ItemTouchHelper.LEFT + "  ItemTouchHelper.RIGHT = " + ItemTouchHelper.RIGHT);
             mListener.onSlided(viewHolder, remove, direction == ItemTouchHelper.LEFT ? ItemConfig.SLIDED_LEFT : ItemConfig.SLIDED_RIGHT);
@@ -98,6 +98,7 @@ public class ItemTouchHelperCallback<T> extends ItemTouchHelper.Callback {
         }
 
     }
+
 
     //返回值决定是否有滑动操作
     @Override
@@ -121,8 +122,8 @@ public class ItemTouchHelperCallback<T> extends ItemTouchHelper.Callback {
             float ratioX = dX / getThresholdX(recyclerView, viewHolder);
             float ratioY = dY / getThresholdY(recyclerView, viewHolder);
 
-            Log.i("LHD", "ItemTouchHelper.ACTION_STATE_SWIPE dx = " + dX + " dy = " + dY + "  ratioX = " + ratioX);
-            Log.i("LHD", "ItemTouchHelper.ACTION_STATE_SWIPE dx = " + dX + " dy = " + dY + "  ratioY = " + ratioY);
+//            Log.i("LHD", "ItemTouchHelper.ACTION_STATE_SWIPE dx = " + dX + " dy = " + dY + "  ratioX = " + ratioX);
+//            Log.i("LHD", "ItemTouchHelper.ACTION_STATE_SWIPE dx = " + dX + " dy = " + dY + "  ratioY = " + ratioY);
 
             float ratio;
 
@@ -214,7 +215,7 @@ public class ItemTouchHelperCallback<T> extends ItemTouchHelper.Callback {
                 }
             }
             if (mListener != null) {
-                if (ratioX != 0) {
+                if (ratio != 0) {
                     mListener.onSliding(viewHolder, ratioX, ratioX < 0 ? ItemConfig.SLIDING_LEFT : ItemConfig.SLIDING_RIGHT);
                 } else {
                     mListener.onSliding(viewHolder, ratioX, ItemConfig.SLIDING_NONE);
